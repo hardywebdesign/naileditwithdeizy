@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "items-images-sandbox.s3.us-west-2.amazonaws.com" },
     ],
   },
+  // Pages rendered per visit (Shop, Contact, Admin) read Deizy's text from
+  // content/ while running, so ship those files with every server function.
+  outputFileTracingIncludes: {
+    "/*": ["./content/**/*"],
+  },
   // The editor lives at /admin (patches/@keystatic+core moves Keystatic's
   // routes there). Old /keystatic links, including the Keystatic Cloud
   // sign-in callback, are sent to the same place under /admin.
