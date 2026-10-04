@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/*
+  Nailed It With Deizy — design tokens
+
+  Colors come from the theme Deizy picks at /admin > Theme and colors.
+  The root layout writes them as --c-* variables on <html>, worked out by
+  src/lib/theme.ts. The values below are only a fallback (the Fall palette).
+
+  Token names (kept from the first design):
+    lacquer        main brand color (buttons, headings)
+    lacquer-deep   darker main (footer, hover)
+    lacquer-bright focus rings, error text
+    on-main        readable text on lacquer
+    on-deep        readable text on lacquer-deep
+    blush          soft section background
+    blush-deep     slightly stronger soft color
+    pearl          page background
+    surface        cards and form fields
+    ink            body text
+    ink-soft       muted text
+    accent         burnished gold for stars, numerals and ornaments
+*/
+:root {
+  --c-main: #a3461b;
+  --c-main-deep: #622a10;
+  --c-main-bright: #b8393a;
+  --c-on-main: #fbf6ee;
+  --c-on-deep: #fbf6ee;
+  --c-soft: #f2e2cc;
+  --c-soft-deep: #e1c2a5;
+  --c-bg: #fbf6ee;
+  --c-surface: #fffdf9;
+  --c-text: #2b1a11;
+  --c-text-soft: #6a5444;
+  --c-accent: #a7712c;
+}
+
+@theme inline {
+  --color-lacquer: var(--c-main);
+  --color-lacquer-deep: var(--c-main-deep);
+  --color-lacquer-bright: var(--c-main-bright);
+  --color-on-main: var(--c-on-main);
+  --color-on-deep: var(--c-on-deep);
+  --color-blush: var(--c-soft);
+  --color-blush-deep: var(--c-soft-deep);
+  --color-pearl: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-ink: var(--c-text);
+  --color-ink-soft: var(--c-text-soft);
+  --color-accent: var(--c-accent);
+
+  --font-display: var(--font-bodoni), "Bodoni 72", Didot, serif;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-pearl);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* A whisper of paper grain over everything, so flat colors feel tactile. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-blush-deep);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-lacquer-bright);
+  outline-offset: 3px;
+}
+
+@layer base {
+  /* Bodoni is delicate at 400; a touch more weight keeps smaller headings crisp.
+     In the base layer so utilities like font-normal can still override it. */
+  .font-display {
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  /* Small spaced-out label above headings */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-lacquer);
+  }
+
+  /* Soft candlelight glow behind a section */
+  .candlelight {
+    background:
+      radial-gradient(60% 55% at 85% 20%, color-mix(in oklab, var(--color-accent) 22%, transparent), transparent 70%),
+      radial-gradient(50% 60% at 10% 90%, color-mix(in oklab, var(--color-lacquer) 14%, transparent), transparent 70%),
+      var(--color-pearl);
+  }
+
+  /* The same glow on the dark band at the bottom of pages */
+  .candlelight-deep {
+    background:
+      radial-gradient(45% 80% at 50% 110%, color-mix(in oklab, var(--color-accent) 45%, transparent), transparent 70%),
+      radial-gradient(35% 60% at 90% 0%, color-mix(in oklab, var(--color-lacquer) 55%, transparent), transparent 70%),
+      var(--color-lacquer-deep);
+  }
+}
+
+/* Arched "nail bed" frame for real photos: rounded top, gently squared base */
+.nail-arch {
+  border-radius: 999px 999px 1.5rem 1.5rem;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Seasonal drawings drifting down a section, swaying as they fall */
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(36px, 50vh, 0) rotate(160deg);
+  }
+  90% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(-12px, 105vh, 0) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+.drift {
+  color: var(--color-accent);
+  animation: drift 22s linear infinite;
+}
+
+/* Slow scrolling ribbon of selling points */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Slowly turning circular badge */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .drift {
+    display: none;
+  }
+}
