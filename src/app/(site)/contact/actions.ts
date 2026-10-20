@@ -13,14 +13,13 @@ export type ContactState = {
 };
 
 const topics: Record<string, string> = {
-  custom: "Custom set request",
   order: "Question about an order",
   sizing: "Help with sizing",
   other: "Something else",
 };
 
 /**
- * Handles the contact / custom-order form.
+ * Handles the contact form (questions; custom orders are booked as consultations).
  *
  * Emails the submission to Deizy through Resend (free tier). Environment
  * variables, set in Vercel > Project > Settings > Environment Variables:
@@ -69,7 +68,7 @@ export async function sendContactMessage(
     console.error("[contact form] RESEND_API_KEY is missing in production");
     return {
       status: "error",
-      message: `The form isn't connected yet. Email ${business.email} instead.`,
+      message: "The form isn't working right now. Please try again a little later.",
       values,
     };
   }
@@ -97,7 +96,7 @@ export async function sendContactMessage(
     console.error("[contact form] Resend error:", error);
     return {
       status: "error",
-      message: `Your message didn't send. Try again, or email ${business.email} directly.`,
+      message: "Your message didn't send. Please try again in a few minutes.",
       values,
     };
   }
