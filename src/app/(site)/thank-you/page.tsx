@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ClearBag } from "@/components/ClearBag";
 
 export const metadata: Metadata = {
   title: "Thank you",
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <section className="candlelight mx-auto max-w-none px-5 py-28 text-center">
+      <ClearBag />
       <p className="eyebrow">Order received</p>
       <h1 className="mt-4 font-display text-5xl text-ink md:text-7xl">
         Thank you, <em className="font-normal text-lacquer">truly.</em>
