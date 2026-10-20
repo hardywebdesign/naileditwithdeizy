@@ -1,14 +1,13 @@
 import Image from "next/image";
-import { buyNow } from "@/app/(site)/shop/actions";
-import { formatPrice, priceRange, type Product } from "@/lib/square";
+import { AddToBag } from "@/components/AddToBag";
+import { priceRange, type Product } from "@/lib/square";
 
 /**
- * A product from Deizy's Square catalog. "Buy now" opens Square's secure
- * checkout (cards, Cash App Pay, Apple Pay, Google Pay). Works without
- * JavaScript, since it's a plain form posting to a Server Action.
+ * A product from Deizy's Square catalog. "Add to bag" puts it in the
+ * shopping bag; the bag checks out everything at once on Square's secure
+ * checkout (cards, Cash App Pay, Apple Pay, Google Pay).
  */
 export function SquareProductCard({ product }: { product: Product }) {
-  const single = product.variations.length === 1;
   return (
     <article className="flex flex-col">
       <div className="nail-arch relative aspect-[4/5] overflow-hidden bg-blush">
@@ -31,31 +30,7 @@ export function SquareProductCard({ product }: { product: Product }) {
         <p className="shrink-0 text-lg font-medium text-lacquer">{priceRange(product.variations)}</p>
       </div>
       {product.description && <p className="mt-1 text-ink-soft">{product.description}</p>}
-      <form action={buyNow} className="mt-5 flex flex-wrap items-end gap-3">
-        {single ? (
-          <input type="hidden" name="variationId" value={product.variations[0].id} />
-        ) : (
-          <label className="block">
-            <span className="text-sm text-ink-soft">Option</span>
-            <select
-              name="variationId"
-              className="mt-1 block h-10 rounded-full border border-ink/20 bg-surface px-4 text-sm text-ink"
-            >
-              {product.variations.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {v.name} · {formatPrice(v.priceCents)}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-        <button
-          type="submit"
-          className="inline-flex h-10 items-center rounded-full bg-lacquer px-5 text-sm font-medium text-on-main transition-colors hover:bg-lacquer-deep"
-        >
-          Buy now
-        </button>
-      </form>
+      <AddToBag name={product.name} image={product.image} variations={product.variations} />
     </article>
   );
 }
