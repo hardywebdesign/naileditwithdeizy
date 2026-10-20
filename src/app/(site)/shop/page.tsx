@@ -90,10 +90,10 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
               Want something one of a kind?
             </h2>
             <p className="mt-3 text-lg text-ink-soft">
-              Send me a photo or an idea and I&apos;ll paint a custom set just for you.
+              Book a free consultation, show me your idea, and I&apos;ll paint a custom set just for you.
             </p>
           </div>
-          <ButtonLink href="/contact?topic=custom">Request a custom set</ButtonLink>
+          <ButtonLink href="/book">Request a custom set</ButtonLink>
         </div>
       </section>
     </>
