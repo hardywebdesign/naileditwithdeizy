@@ -5,7 +5,6 @@ import { sendContactMessage, type ContactState } from "@/app/(site)/contact/acti
 import { cn } from "@/lib/cn";
 
 const topics = [
-  { value: "custom", label: "Custom set request" },
   { value: "order", label: "Question about an order" },
   { value: "sizing", label: "Help with sizing" },
   { value: "other", label: "Something else" },
@@ -14,12 +13,12 @@ const topics = [
 const initialState: ContactState = { status: "idle" };
 
 /**
- * Contact / custom-order form. Submits to a Server Action
+ * Contact form for questions (custom orders go through a booked consultation). Submits to a Server Action
  * (src/app/contact/actions.ts) that emails Deizy through Resend.
  * Works without JavaScript too, since it's a plain form posting to the action.
  */
 export function ContactForm({
-  defaultTopic = "custom",
+  defaultTopic = "other",
   defaultMessage = "",
 }: {
   defaultTopic?: string;
@@ -111,8 +110,8 @@ export function ContactForm({
       <label className="block">
         <span className="font-medium">Message</span>
         <span id="message-hint" className="mt-1 block text-sm text-ink-soft">
-          For a custom set, describe the colors, shape, length and any art you want. Include
-          your sizes if you know them.
+          Tell me what you need help with. For an order question, include the name you
+          ordered under.
         </span>
         <textarea
           name="message"
