@@ -62,7 +62,7 @@ export default async function Home() {
             )}
             <div className="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
               <ButtonLink href="/shop">Shop sets</ButtonLink>
-              <ButtonLink href="/contact?topic=custom" variant="outline">
+              <ButtonLink href="/book" variant="outline">
                 Request a custom set
               </ButtonLink>
             </div>
