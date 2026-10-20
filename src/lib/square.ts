@@ -11,14 +11,11 @@ import "server-only";
  *   SQUARE_ENVIRONMENT    "production" (default) or "sandbox" for testing
  */
 
-const SQUARE_VERSION = "2026-09-16";
+import type { ProductVariation } from "@/lib/format";
 
-export type ProductVariation = {
-  id: string;
-  name: string;
-  /** Price in cents, or null for "price varies" */
-  priceCents: number | null;
-};
+export { formatPrice, priceRange, type ProductVariation } from "@/lib/format";
+
+const SQUARE_VERSION = "2026-09-16";
 
 export type Product = {
   id: string;
@@ -206,8 +203,11 @@ async function locationId(): Promise<string> {
   return location.id;
 }
 
-/** Creates a Square checkout page for one item and returns its URL. */
-export async function createCheckoutUrl(variationId: string, redirectUrl: string, supportEmail: string) {
+/** One line of an order: a catalog variation and how many. */
+export type OrderLine = { variationId: string; quantity: number };
+
+/** Creates one Square checkout page for everything in the bag and returns its URL. */
+export async function createCheckoutUrl(lines: OrderLine[], redirectUrl: string, supportEmail: string) {
   const data = await squareFetch<{ payment_link?: { url?: string } }>(
     "/v2/online-checkout/payment-links",
     {
@@ -216,7 +216,10 @@ export async function createCheckoutUrl(variationId: string, redirectUrl: string
         idempotency_key: crypto.randomUUID(),
         order: {
           location_id: await locationId(),
-          line_items: [{ catalog_object_id: variationId, quantity: "1" }],
+          line_items: lines.map((l) => ({
+            catalog_object_id: l.variationId,
+            quantity: String(l.quantity),
+          })),
         },
         checkout_options: {
           redirect_url: redirectUrl,
@@ -226,7 +229,7 @@ export async function createCheckoutUrl(variationId: string, redirectUrl: string
           // Square shows these as short questions on its checkout page.
           custom_fields: [
             { title: "Shipping or local pickup?" },
-            { title: "Your nail sizes, shape and length" },
+            { title: "Your nail sizes, shape and length for each set" },
           ],
           accepted_payment_methods: { apple_pay: true, google_pay: true, cash_app_pay: true },
         },
@@ -236,22 +239,4 @@ export async function createCheckoutUrl(variationId: string, redirectUrl: string
   const url = data.payment_link?.url;
   if (!url) throw new Error("Square did not return a checkout URL");
   return url;
-}
-
-export function formatPrice(cents: number | null) {
-  if (cents === null) return "Price varies";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
-  }).format(cents / 100);
-}
-
-/** "$20" or "$20 – $35" across an item's variations */
-export function priceRange(variations: ProductVariation[]) {
-  const prices = variations.map((v) => v.priceCents).filter((c): c is number => c !== null);
-  if (!prices.length) return "Price varies";
-  const lo = Math.min(...prices);
-  const hi = Math.max(...prices);
-  return lo === hi ? formatPrice(lo) : `${formatPrice(lo)} – ${formatPrice(hi)}`;
 }
