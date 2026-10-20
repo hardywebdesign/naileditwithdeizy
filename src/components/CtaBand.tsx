@@ -22,7 +22,7 @@ export function CtaBand({
           <ButtonLink href="/shop" variant="deep">
             Shop sets
           </ButtonLink>
-          <ButtonLink href="/contact?topic=custom" variant="outline-deep">
+          <ButtonLink href="/book" variant="outline-deep">
             Request a custom set
           </ButtonLink>
         </div>
