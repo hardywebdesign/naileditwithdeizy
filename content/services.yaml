@@ -9,7 +9,7 @@ items:
       - Ready in a few days
     photo: /images/gallery/haunted-garden.jpg
     buttonLabel: Request a custom set
-    buttonLink: /contact?topic=custom
+    buttonLink: /book
   - name: Ready-made sets
     summary: >-
       Finished designs, painted for the season and ready to order in your
