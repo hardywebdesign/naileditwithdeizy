@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  */
 function calendlyEmbedUrl(link: string) {
   try {
-    const url = new URL(link);;
+    const url = new URL(link);
     if (!/(^|\.)calendly\.com$/.test(url.hostname)) return null;
     url.searchParams.set("hide_gdpr_banner", "1");
     return url.toString();
@@ -96,7 +96,7 @@ export default async function BookPage() {
                 <p className="mt-3 text-on-deep/80">
                   In the meantime, send a message and I&apos;ll find a time with you.
                 </p>
-                <ButtonLink href="/contact?topic=custom" variant="deep" className="mt-8 w-full">
+                <ButtonLink href="/contact" variant="deep" className="mt-8 w-full">
                   Send a message
                 </ButtonLink>
               </>
