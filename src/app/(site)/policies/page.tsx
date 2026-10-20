@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageIntro } from "@/components/PageIntro";
-import { getBusiness, getPolicies } from "@/lib/content";
+import { getPolicies } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Policies",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PoliciesPage() {
-  const [{ items }, business] = await Promise.all([getPolicies(), getBusiness()]);
+  const { items } = await getPolicies();
   return (
     <>
       <PageIntro
@@ -26,13 +27,13 @@ export default async function PoliciesPage() {
           ))}
         </div>
         <p className="mt-10 text-ink-soft">
-          Questions about a policy? Email{" "}
-          <a
-            href={`mailto:${business.email}`}
+          Questions about a policy?{" "}
+          <Link
+            href="/contact?topic=order"
             className="text-lacquer underline decoration-1 underline-offset-4"
           >
-            {business.email}
-          </a>
+            Send me a message
+          </Link>
           .
         </p>
       </section>
