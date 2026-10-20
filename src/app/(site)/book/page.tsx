@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  */
 function calendlyEmbedUrl(link: string) {
   try {
-    const url =https://calendly.com/deizaraejean/30min;
+    const url = new URL(link);;
     if (!/(^|\.)calendly\.com$/.test(url.hostname)) return null;
     url.searchParams.set("hide_gdpr_banner", "1");
     return url.toString();
