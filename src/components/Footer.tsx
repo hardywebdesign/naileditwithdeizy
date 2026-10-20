@@ -21,11 +21,6 @@ export async function Footer() {
           </p>
           {business.tagline && <p className="mt-3 max-w-xs text-on-deep/75">{business.tagline}</p>}
           <ul className="mt-6 space-y-1 text-on-deep/85">
-            <li>
-              <a href={`mailto:${business.email}`} className="hover:underline underline-offset-4">
-                {business.email}
-              </a>
-            </li>
             {business.phone && (
               <li>
                 <a
