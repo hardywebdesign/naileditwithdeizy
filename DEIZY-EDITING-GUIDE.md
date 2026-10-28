@@ -53,4 +53,4 @@ send them a payment link from Square. Questions come to your email through the c
 form.
 
 ## Need help?
-Message Tasha at Hardy Web Design.
+Message Tasha at Nuvela Creative Co.

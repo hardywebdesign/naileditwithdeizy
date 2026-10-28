@@ -85,8 +85,8 @@ export async function Footer() {
           </p>
           <p>
             Website by{" "}
-            {/* TODO: link to Hardy Web Design once the business site is live */}
-            <span className="text-on-deep/85">Hardy Web Design</span>
+            {/* TODO: link to Nuvela Creative Co. once the business site is live */}
+            <span className="text-on-deep/85">Nuvela Creative Co.</span>
           </p>
         </div>
       </div>

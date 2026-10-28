@@ -1,7 +1,7 @@
 # Nailed It With Deizy — website
 
 Site for Nailed It With Deizy (hand-painted custom press-on nails), built by
-Hardy Web Design with Next.js 16 (App Router), TypeScript and Tailwind CSS v4.
+Nuvela Creative Co. with Next.js 16 (App Router), TypeScript and Tailwind CSS v4.
 
 Three systems work together:
 
@@ -111,7 +111,7 @@ Domains, then set `NEXT_PUBLIC_SITE_URL=https://naileditwithdeizy.com`.
 - [ ] Contact form test message received
 - [ ] Domain connected and `NEXT_PUBLIC_SITE_URL` set
 - [ ] Analytics (`npm i @vercel/analytics`, add `<Analytics />` to `src/app/layout.tsx`)
-- [ ] Footer "Website by Hardy Web Design" linked to your site
+- [ ] Footer "Website by Nuvela Creative Co." linked to your site
 
 ## Notes
 
