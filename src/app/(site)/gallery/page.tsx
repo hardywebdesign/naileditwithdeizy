@@ -22,9 +22,9 @@ export default async function GalleryPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Portfolio"
+        eyebrow="Shop the sets"
         title="Gallery"
-        intro="Recent sets, all painted by hand. See something you love? Request it in your size, or ask for it in your colors."
+        intro="Every set is painted by hand and made in your size. See one you love? Tap Request this set to book a free consultation, and we'll get it made for you."
       >
         <nav aria-label="Gallery sections" className="flex flex-wrap gap-2">
           {sections.map((s) => (
@@ -57,6 +57,8 @@ export default async function GalleryPage() {
                   key={p.title}
                   title={p.title}
                   image={p.image}
+                  description={p.description}
+                  price={p.price}
                   requestable
                   priority={si === 0 && i < 4}
                 />

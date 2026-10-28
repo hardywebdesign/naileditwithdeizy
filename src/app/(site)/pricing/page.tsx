@@ -4,21 +4,14 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { CtaBand } from "@/components/CtaBand";
 import { SeasonMotif } from "@/components/Motif";
 import { getBusiness, getPricing } from "@/lib/content";
-import { formatPrice, getCatalog, priceRange } from "@/lib/square";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Press-on nail set prices, what's included with every set, and consultations.",
+  description: "Press-on nail set prices and what's included with every set.",
 };
 
-export const revalidate = 300;
-
 export default async function PricingPage() {
-  const [pricing, business, catalog] = await Promise.all([
-    getPricing(),
-    getBusiness(),
-    getCatalog(),
-  ]);
+  const [pricing, business] = await Promise.all([getPricing(), getBusiness()]);
 
   return (
     <>
@@ -35,8 +28,8 @@ export default async function PricingPage() {
           </p>
           <p className="mt-4 font-display text-xl italic text-on-deep/80">hand-painted, made to fit</p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/shop" variant="deep">
-              Shop sets
+            <ButtonLink href="/gallery" variant="deep">
+              Browse sets
             </ButtonLink>
             {business.tipUrl && (
               <ButtonLink href={business.tipUrl} variant="outline-deep" target="_blank" rel="noopener">
@@ -61,40 +54,6 @@ export default async function PricingPage() {
           </div>
         )}
       </section>
-
-      {catalog && catalog.products.length > 0 && (
-        <section className="mx-auto max-w-4xl px-5 pb-20 md:pb-28">
-          <h2 className="text-center font-display text-4xl text-ink md:text-5xl">Price list</h2>
-          <table className="mt-8 w-full text-lg">
-            <caption className="sr-only">Prices for each set</caption>
-            <tbody className="divide-y divide-accent/20 border-y border-accent/20">
-              {catalog.products.map((p) => (
-                <tr key={p.id}>
-                  <th scope="row" className="py-4 pr-4 text-left font-normal text-ink">
-                    {p.name}
-                  </th>
-                  <td className="py-4 text-right font-medium text-lacquer">
-                    {priceRange(p.variations)}
-                  </td>
-                </tr>
-              ))}
-              {catalog.services.map((s) => (
-                <tr key={s.id}>
-                  <th scope="row" className="py-4 pr-4 text-left font-normal text-ink">
-                    {s.name}
-                    {s.durationMinutes ? (
-                      <span className="text-ink-soft"> · {s.durationMinutes} min</span>
-                    ) : null}
-                  </th>
-                  <td className="py-4 text-right font-medium text-lacquer">
-                    {s.priceCents === 0 ? "Free" : formatPrice(s.priceCents)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      )}
 
       <CtaBand />
     </>

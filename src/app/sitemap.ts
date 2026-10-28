@@ -3,7 +3,6 @@ import { siteUrl } from "@/lib/site";
 
 const routes = [
   "",
-  "/shop",
   "/services",
   "/pricing",
   "/gallery",

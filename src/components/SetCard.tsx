@@ -5,15 +5,25 @@ interface SetCardProps {
   title: string;
   image: string | null;
   style?: string;
-  /** Show a "Request this set" link to book a consultation */
+  description?: string;
+  price?: string;
+  /** Show a "Request this set" link to book a consultation about it */
   requestable?: boolean;
   priority?: boolean;
 }
 
-/** One of Deizy's designs from the gallery. */
-export function SetCard({ title, image, style, requestable, priority }: SetCardProps) {
+/** One of Deizy's sets from the gallery. */
+export function SetCard({
+  title,
+  image,
+  style,
+  description,
+  price,
+  requestable,
+  priority,
+}: SetCardProps) {
   return (
-    <article className="group">
+    <article className="group flex flex-col">
       {image && (
         <div className="nail-arch relative aspect-[4/5] overflow-hidden bg-blush ring-1 ring-accent/25 ring-offset-4 ring-offset-pearl transition-shadow duration-500 group-hover:shadow-[0_24px_50px_-24px_var(--color-lacquer)]">
           <Image
@@ -26,13 +36,17 @@ export function SetCard({ title, image, style, requestable, priority }: SetCardP
           />
         </div>
       )}
-      <div className="mt-5 text-center">
+      <div className="mt-5 flex flex-1 flex-col items-center text-center">
         {style && <p className="eyebrow text-[0.65rem] text-ink-soft">{style}</p>}
         <h3 className="mt-1 font-display text-xl text-ink md:text-2xl">{title}</h3>
+        {price && <p className="mt-1 font-display text-lg italic text-lacquer">{price}</p>}
+        {description && (
+          <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-soft">{description}</p>
+        )}
         {requestable && (
           <Link
-            href="/book"
-            className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-lacquer transition-colors hover:text-lacquer-deep"
+            href={`/book?set=${encodeURIComponent(title)}`}
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-lacquer transition-colors hover:text-lacquer-deep"
           >
             Request this set
             <span aria-hidden className="transition-transform group-hover:translate-x-1">

@@ -12,29 +12,38 @@ export const metadata: Metadata = {
  * Calendly links are shown as a calendar right on the page, so customers
  * pick a time without leaving the site. Any other booking link (Square,
  * etc.) gets a "Book now" button instead.
+ *
+ * When someone taps "Request this set" in the gallery, the set's name is
+ * filled into the first question on Deizy's Calendly booking form (a1).
  */
-function calendlyEmbedUrl(link: string) {
+function calendlyEmbedUrl(link: string, setName: string) {
   try {
     const url = new URL(link);
     if (!/(^|\.)calendly\.com$/.test(url.hostname)) return null;
     url.searchParams.set("hide_gdpr_banner", "1");
+    if (setName) url.searchParams.set("a1", setName);
     return url.toString();
   } catch {
     return null;
   }
 }
 
-export default async function BookPage() {
-  const business = await getBusiness();
+export default async function BookPage({ searchParams }: PageProps<"/book">) {
+  const [{ set }, business] = await Promise.all([searchParams, getBusiness()]);
+  const setName = typeof set === "string" ? set.trim().slice(0, 80) : "";
   const bookingUrl = business.bookingUrl;
-  const embedUrl = bookingUrl ? calendlyEmbedUrl(bookingUrl) : null;
+  const embedUrl = bookingUrl ? calendlyEmbedUrl(bookingUrl, setName) : null;
 
   return (
     <>
       <PageIntro
         eyebrow="Free · 15 minutes"
         title="Book a consultation"
-        intro="Let's plan your custom set together. Pick a time that works for you."
+        intro={
+          setName
+            ? `Let's get your ${setName} set made. Pick a time and we'll go over your sizes, shape and length.`
+            : "Let's plan your custom set together. Pick a time that works for you."
+        }
       />
 
       {business.bookingInfo.length > 0 && (

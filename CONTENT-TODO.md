@@ -16,19 +16,19 @@ during her review. Each can be fixed in the editor in a minute.
 ## Please confirm
 1. **Julia's review** was cut off at "...to anyone". The site ends it there; send the
    rest if there's more.
-2. **Shipping:** where does she ship, and what does shipping cost? Square checkout
-   currently doesn't add a shipping charge.
+2. **Shipping:** where does she ship, and what does shipping cost? Add it to the FAQ and
+   Policies so customers know before their consultation.
 3. **Pickup:** what town or area for local pickup? The site just says pickup details
    come after ordering.
 4. **Facebook link:** we have her name (Deizarae Chambers) but not the page URL.
    Add it under Business info and links. Instagram too, if she has one.
 5. **Wear time:** the Sizing page says glue lasts longer than tabs but gives no number.
    She can add her own (for example "1–2 weeks with glue").
-6. **Sizing kits:** do they cost extra? They'll show with a price once added in Square.
+6. **Sizing kits:** do they cost extra? Add the price to the FAQ or Pricing page.
 7. **Square tip link** (square.link/u/JP4ueYP1) is used for the "Leave a tip" buttons.
    Confirm that's what it's for.
 8. **Consultations:** the site says they're free, 15 minutes, every day 9am–9pm.
-   Confirm free, then create the service in Square Appointments.
+   Confirm free. (Booked through Calendly.)
 9. **Photo of her** for the About page, if she wants one. It currently shows her
    holding a finished set.
 

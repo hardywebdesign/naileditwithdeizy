@@ -111,7 +111,7 @@ export default config({
     }),
 
     gallery: singleton({
-      label: "Gallery",
+      label: "Gallery (your sets)",
       path: "content/gallery",
       format: { data: "yaml" },
       schema: {
@@ -119,6 +119,15 @@ export default config({
           fields.object({
             image: photo("Photo", "gallery"),
             title: fields.text({ label: "Name of the set", validation: { isRequired: true } }),
+            description: fields.text({
+              label: "Description",
+              description: "Optional. One or two sentences about the set, shown under its name.",
+              multiline: true,
+            }),
+            price: fields.text({
+              label: "Price",
+              description: "Optional, like \"$25\" or \"From $20\". Leave empty to hide the price.",
+            }),
             style: fields.select({
               label: "Section",
               options: [
@@ -138,7 +147,8 @@ export default config({
           }),
           {
             label: "Photos",
-            description: "Drag to reorder. Photos show on the Gallery page grouped by section.",
+            description:
+              "Every set you add here shows on the Gallery page with a Request this set button. Drag to reorder.",
             itemLabel: (props) => props.fields.title.value || "Untitled set",
           },
         ),
@@ -294,8 +304,8 @@ export default config({
         facebook: fields.url({ label: "Facebook link" }),
         instagram: fields.url({ label: "Instagram link" }),
         bookingUrl: fields.url({
-          label: "Square booking link",
-          description: "Square Dashboard > Appointments > Online booking > copy your booking site link",
+          label: "Booking link (Calendly)",
+          description: "Your Calendly link for consultations, like https://calendly.com/your-name/consultation. It shows as a calendar on the Book page.",
         }),
         tipUrl: fields.url({
           label: "Square tip link",

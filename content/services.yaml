@@ -12,15 +12,14 @@ items:
     buttonLink: /book
   - name: Ready-made sets
     summary: >-
-      Finished designs, painted for the season and ready to order in your
-      size.
+      Pick any design from the gallery and I'll paint it in your size.
     details:
       - New seasonal designs
       - Ordered in your size
       - Shipping or local pickup
     photo: /images/gallery/ruby-chrome.jpg
-    buttonLabel: Shop sets
-    buttonLink: /shop
+    buttonLabel: Browse the gallery
+    buttonLink: /gallery
   - name: Sizing kits
     summary: >-
       Not sure of your size? Try a sizing kit at home first, or skip it and
@@ -30,5 +29,5 @@ items:
       - Or send photos with a quarter
       - Order your set knowing it fits
     photo: /images/gallery/lilac-gems.jpg
-    buttonLabel: Get a sizing kit
-    buttonLink: /shop
+    buttonLabel: Ask about a sizing kit
+    buttonLink: /contact?topic=sizing

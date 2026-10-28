@@ -8,8 +8,8 @@ Three systems work together:
 | What | Where Deizy changes it |
 | --- | --- |
 | Colors, seasonal theme, photos, page text, reviews, links | **Admin** at `/admin` (Keystatic) |
-| Products, prices, product photos | **Square Dashboard** (Items) |
-| Consultation bookings | **Square Appointments** |
+| Sets for sale (photos, names, descriptions, prices) | **Gallery** in the editor at `/admin` |
+| Consultation bookings | **Calendly** (shown on the Book page) |
 
 Deizy never needs to touch code. `DEIZY-EDITING-GUIDE.md` is the guide to send her.
 `CONTENT-TODO.md` lists open questions from her answers.
@@ -38,7 +38,6 @@ In local development the editor saves straight to the files in `content/` and
 | Sizing guide PDF | `public/downloads/sizing-guide.pdf` |
 | Seasonal palettes | `src/lib/palettes.ts` |
 | Theme math (readable text on any color) | `src/lib/theme.ts` |
-| Square catalog + checkout | `src/lib/square.ts`, `src/app/(site)/shop/actions.ts` |
 | Contact form email | `src/app/(site)/contact/actions.ts` |
 | Pages | `src/app/(site)/<page>/page.tsx` |
 
@@ -67,28 +66,22 @@ make the site unreadable. Spooky season is a dark theme. To add a palette, add i
 Each save in the editor commits to GitHub and Vercel redeploys in about a minute.
 Photos she uploads are committed to the repo, so Keystatic's paid image hosting isn't needed.
 
-### 3. Square (products, prices, checkout)
-Deizy already has a Square account.
-1. With Deizy signed in, go to [developer.squareup.com](https://developer.squareup.com) > Applications > create an app.
-2. Open the app > **Production** > copy the **Access token**.
-3. In Vercel, set `SQUARE_ACCESS_TOKEN` (keep it secret; never commit it). Redeploy.
-4. In the Square Dashboard, add each set as an Item with a photo and price. Add sizes,
-   shapes or lengths as **variations** if prices differ; the shop shows a dropdown.
-   Use **categories** to get sections on the Shop page.
+### 3. Orders (no online checkout)
+The Gallery is the shop. Each set has a **Request this set** button that opens the Book
+page with the set's name, and the name is passed to Calendly as `a1` (the first
+question on her booking form). After the consultation Deizy sends a Square payment
+link herself. Old `/shop`, `/bag` and `/thank-you` links redirect to `/gallery`
+(`next.config.ts`). Square is only used for her tip link.
 
-Until the token is set, the Shop page shows her gallery with "Request this set" links,
-so the site works for review without Square.
+### 4. Calendly (consultations)
+Deizy books consultations through Calendly: one 15-minute event, every day 9am–9pm, with
+Zoom and phone call as location options (Calendly creates a Zoom link for each booking).
+Paste the event link in the editor under **Business info and links > Booking link (Calendly)**.
+In Calendly, make the event's **first question** "Which set are you interested in?" so the
+set someone requested is filled in for them.
+The Book page shows it as a calendar right on the page. Any non-Calendly link shows a
+"Book now" button instead.
 
-"Buy now" creates a Square checkout for that item (cards, Cash App Pay, Apple Pay,
-Google Pay, tipping on), asks for a shipping address, and asks two questions: shipping
-or pickup, and her sizes/shape/length. Afterward Square sends the buyer to `/thank-you`.
-The catalog refreshes on the site every 5 minutes.
-
-### 4. Square Appointments (consultations)
-In Square Appointments, create a 15-minute "Consultation" service and set her hours
-(every day 9am–9pm), then paste the booking site link into the editor under
-**Business info and links > Square booking link**. Appointment services also appear
-on the Pricing page.
 
 ### 5. Contact form (Resend)
 1. Create a free [Resend](https://resend.com) account and API key; set `RESEND_API_KEY`.
@@ -105,20 +98,16 @@ Domains, then set `NEXT_PUBLIC_SITE_URL=https://naileditwithdeizy.com`.
 | Name | Needed for |
 | --- | --- |
 | `NEXT_PUBLIC_KEYSTATIC_PROJECT` | Editing on the live site |
-| `SQUARE_ACCESS_TOKEN` | Shop, price list and checkout |
-| `SQUARE_LOCATION_ID` | Optional; the first active location is used |
-| `SQUARE_ENVIRONMENT` | Optional; `sandbox` for testing |
 | `RESEND_API_KEY` | Contact form email |
 | `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Optional contact form overrides |
-| `NEXT_PUBLIC_SITE_URL` | Sitemap, SEO and checkout return URL once the domain is live |
+| `NEXT_PUBLIC_SITE_URL` | Sitemap and SEO once the domain is live |
 
 ## Before launch
 
 - [ ] Deizy answers the open questions in `CONTENT-TODO.md`
 - [ ] Keystatic Cloud connected and Deizy invited
-- [ ] Square token set; items show in the Shop
-- [ ] Test purchase with a real card, then refund it in Square
-- [ ] Square booking link added in the editor
+- [ ] Test "Request this set": the set name appears on the Calendly form
+- [ ] Calendly booking link added in the editor
 - [ ] Contact form test message received
 - [ ] Domain connected and `NEXT_PUBLIC_SITE_URL` set
 - [ ] Analytics (`npm i @vercel/analytics`, add `<Analytics />` to `src/app/layout.tsx`)

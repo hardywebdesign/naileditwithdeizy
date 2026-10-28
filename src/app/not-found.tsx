@@ -16,14 +16,14 @@ export default async function NotFound() {
             Page <em className="font-normal text-lacquer">not found</em>
           </h1>
           <p className="mt-5 text-lg text-ink-soft">
-            That link doesn&apos;t go anywhere. Try the shop, or head back{" "}
+            That link doesn&apos;t go anywhere. Try the gallery, or head back{" "}
             <Link href="/" className="text-lacquer underline underline-offset-4">
               home
             </Link>
             .
           </p>
-          <ButtonLink href="/shop" className="mt-10">
-            Shop sets
+          <ButtonLink href="/gallery" className="mt-10">
+            Browse sets
           </ButtonLink>
         </section>
       </main>

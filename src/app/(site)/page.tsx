@@ -61,7 +61,7 @@ export default async function Home() {
               </p>
             )}
             <div className="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
-              <ButtonLink href="/shop">Shop sets</ButtonLink>
+              <ButtonLink href="/gallery">Browse sets</ButtonLink>
               <ButtonLink href="/book" variant="outline">
                 Request a custom set
               </ButtonLink>
@@ -173,7 +173,14 @@ export default async function Home() {
           </div>
           <div className="mt-14 grid grid-cols-2 gap-x-5 gap-y-14 md:grid-cols-3 md:gap-x-10">
             {featured.map((p) => (
-              <SetCard key={p.title} title={p.title} image={p.image} style={p.style} requestable />
+              <SetCard
+                key={p.title}
+                title={p.title}
+                image={p.image}
+                style={p.style}
+                price={p.price}
+                requestable
+              />
             ))}
           </div>
           <div className="mt-16 text-center">

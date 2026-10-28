@@ -1,14 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
-    // Product photos uploaded to Square are served from these hosts.
-    remotePatterns: [
-      { protocol: "https", hostname: "items-images-production.s3.us-west-2.amazonaws.com" },
-      { protocol: "https", hostname: "items-images-sandbox.s3.us-west-2.amazonaws.com" },
-    ],
-  },
-  // Pages rendered per visit (Shop, Contact, Admin) read Deizy's text from
+  // Pages rendered per visit (Book, Contact, Admin) read Deizy's text from
   // content/ while running, so ship those files with every server function.
   outputFileTracingIncludes: {
     "/*": ["./content/**/*"],
@@ -20,6 +13,19 @@ const nextConfig: NextConfig = {
     return [
       { source: "/keystatic", destination: "/admin", permanent: false },
       { source: "/keystatic/:path*", destination: "/admin/:path*", permanent: false },
+      // Keystatic Cloud only accepts sign-ins from the site's real address, so
+      // the editor on the old preview address goes to the www domain instead.
+      ...["/admin", "/admin/:path*"].map((source) => ({
+        source,
+        has: [{ type: "host" as const, value: "naileditwithdeizy-yy9p.vercel.app" }],
+        destination: `https://www.naileditwithdeizy.com${source}`,
+        permanent: false,
+      })),
+      // The shop was replaced by the gallery (sets are requested by booking a
+      // consultation), so old shop links land there.
+      { source: "/shop", destination: "/gallery", permanent: true },
+      { source: "/bag", destination: "/gallery", permanent: true },
+      { source: "/thank-you", destination: "/gallery", permanent: true },
     ];
   },
 };

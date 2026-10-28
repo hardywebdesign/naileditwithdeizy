@@ -6,7 +6,6 @@ import { useState } from "react";
 import { nav } from "@/lib/site";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Wordmark } from "@/components/Wordmark";
-import { BagLink } from "@/components/BagLink";
 import { cn } from "@/lib/cn";
 
 export function Header({ businessName }: { businessName: string }) {
@@ -50,7 +49,6 @@ export function Header({ businessName }: { businessName: string }) {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <BagLink />
           <div className="hidden sm:block">
             <ButtonLink href="/book" size="sm">
               Book a consultation

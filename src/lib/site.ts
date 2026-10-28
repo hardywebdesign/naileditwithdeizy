@@ -7,10 +7,9 @@ export function siteUrl() {
 }
 
 export const nav = [
-  { label: "Shop", href: "/shop" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
   { label: "Sizing & care", href: "/sizing" },
 ];
